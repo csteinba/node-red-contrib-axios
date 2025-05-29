@@ -12,13 +12,13 @@
     "request",
     "axios"
   ],
-  "homepage": "https://github.com/steineey/node-red-contrib-axios",
+  "homepage": "https://github.com/csteinba/node-red-contrib-axios",
   "bugs": "https://github.com/steineey/node-red-contrib-axios/issues",
   "repository": {
     "type": "git",
-    "url": "https://github.com/steineey/node-red-contrib-axios"
+    "url": "https://github.com/cteinba/node-red-contrib-axios"
   },
-  "author": "steineey (https://github.com/steineey)",
+  "author": "steineey (https://github.com/csteinba)",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.9.0"
