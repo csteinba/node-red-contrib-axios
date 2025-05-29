@@ -13,7 +13,7 @@
     "axios"
   ],
   "homepage": "https://github.com/csteinba/node-red-contrib-axios",
-  "bugs": "https://github.com/steineey/node-red-contrib-axios/issues",
+  "bugs": "https://github.com/csteinba/node-red-contrib-axios/issues",
   "repository": {
     "type": "git",
     "url": "https://github.com/cteinba/node-red-contrib-axios"
