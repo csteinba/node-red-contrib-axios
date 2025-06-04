@@ -28,7 +28,7 @@ Supported authentication mechanisms:
 
 Use this node within your flows to perform HTTP requests.
 
-![axios-request](https://raw.githubusercontent.com/steineey/node-red-contrib-axios/master/examples/axios-request.png)
+![axios-request](https://raw.githubusercontent.com/csteinba/node-red-contrib-axios/master/examples/axios-request.png)
 
 ## Example Flows
 
