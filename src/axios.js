@@ -19,6 +19,7 @@ module.exports = function (RED) {
             bearerToken: { type: "password" },
             proxyUsername: { type: "text" },
             proxyPassword: { type: "password" },
+            apiKeyValue: { type: "text" }
         },
     });
 
@@ -53,6 +54,7 @@ module.exports = function (RED) {
             httpsAgent: new https.Agent(agentConfig),
             httpAgent: new http.Agent(agentConfig),
             headers: {},
+            params: {}
         };
 
         // request authentication basic
@@ -169,22 +171,40 @@ module.exports = function (RED) {
             const config = {
                 ...baseConfig,
                 url: msg.url || n.url,
-                params: null,
+                params: {}
             };
 
+            // Request with API key 
+            if(endpoint.credentials.apiKeyValue && endpoint.config.apiKeyKey && endpoint.config.apiKeyAddTo) {
+                let apiKeyValue = "";
+                
+                // Check API key value for mustache syntax
+                const apiKeyMatch = /^{{(global|flow)\.(.+)}}$/.exec(endpoint.credentials.apiKeyValue);
+                if(apiKeyMatch && apiKeyMatch[1] && apiKeyMatch[2]) {
+                    apiKeyValue = node.context()[apiKeyMatch[1]].get(apiKeyMatch[2]);
+                } else {
+                    apiKeyValue = endpoint.credentials.apiKeyValue;
+                }
+
+                // Add API key to request config
+                config[endpoint.config.apiKeyAddTo][endpoint.config.apiKeyKey] = apiKeyValue;
+            }
+
             try {
+                let msgParams = {};
                 if (config.method === "get") {
                     // in case of get-method use payload for params
-                    config.params = msg.params || msg.payload;
+                    msgParams = msg.params || msg.payload;
                 } else {
                     // in case of other mehthods
-                    config.params = msg.params;
+                    msgParams = msg.params;
                     config.data = msg.payload;
                 }
 
                 config.params = {
-                    ...config.params,
+                    ...msgParams,
                     ...getProperty(n.params),
+                    ...config.params
                 };
 
                 config.headers = {
@@ -202,9 +222,13 @@ module.exports = function (RED) {
                 .request(config)
                 .then((response) => {
                     msg.payload = response.data;
-                    if (n.outputVerbose ?? true) { // Keep the flow msg clean
+                    if (n.verboseOut ?? true) { // Keep the flow msg clean
                         msg.statusCode = response.status;
                         msg.headers = response.headers;
+                    } else {
+                        delete msg.url;
+                        delete msg.params;
+                        delete msg.headers;
                     }
                     send(msg);
                     execSuccess(execStartTs);

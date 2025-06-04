@@ -10,6 +10,8 @@
             proxyProtocol: { value: "https" },
             proxyHost: { value: "" },
             proxyPort: { value: "" },
+            apiKeyKey: {value: ""},
+            apiKeyAddTo: {value: "headers"},
         },
         credentials: {
             username: { value: "", type: "text" },
@@ -17,6 +19,7 @@
             bearerToken: { value: "", type: "password" },
             proxyUsername: { value: "", type: "text" },
             proxyPassword: { value: "", type: "password" },
+            apiKeyValue: { value: "", type: "text"}
         },
         color: "#cbbbf7",
         icon: "icons/node-red/white-globe.svg",
@@ -86,23 +89,33 @@
             </div>
             <h4>Basic Authentication</h4>
             <div class="form-row">
-                <label for="node-config-input-username"
-                    ><i class="fa fa-user"></i> Username</label
-                >
+                <label for="node-config-input-username">Username</label>
                 <input type="text" id="node-config-input-username" />
             </div>
             <div class="form-row">
-                <label for="node-config-input-password"
-                    ><i class="fa fa-lock"></i> Password</label
-                >
+                <label for="node-config-input-password">Password</label>
                 <input type="password" id="node-config-input-password" />
             </div>
             <h4>Bearer Token</h4>
             <div class="form-row">
-                <label for="node-config-input-bearerToken"
-                    ><i class="fa fa-key"></i> Token</label
-                >
+                <label for="node-config-input-bearerToken">Token</label>
                 <input type="password" id="node-config-input-bearerToken" />
+            </div>
+            <h4>API Key</h4>
+            <div class="form-row">
+                <label for="node-config-input-apiKeyKey">Key</label>
+                <input type="text" id="node-config-input-apiKeyKey" />
+            </div>
+            <div class="form-row">
+                <label for="node-config-input-apiKeyValue">Value</label>
+                <input type="text" id="node-config-input-apiKeyValue" />
+            </div>
+            <div class="form-row">
+                <label for="node-config-input-apiKeyAddTo">Add To</label>
+                <select id="node-config-input-apiKeyAddTo">
+                    <option value="headers">Header</option>
+                    <option value="params">Query Param</option>
+                </select>
             </div>
         </div>
 
@@ -194,7 +207,7 @@ Proxy hostname, port and optional authentication for proxy.
             keepAlive: { value: false },
             timeout: { value: 30000, required: true },
             validateStatus: { value: true },
-            outputVerbose: { value: false },
+            verboseOut: { value: false },
             headers: { value: [] },
             params: { value: [] }
         },
@@ -370,11 +383,11 @@ Proxy hostname, port and optional authentication for proxy.
     <div class="form-row">
         <input
             type="checkbox"
-            id="node-input-outputVerbose"
+            id="node-input-verboseOut"
             style="display: inline-block; width: auto; vertical-align: top;"
         />
-        <label for="node-input-outputVerbose" style="width: auto;"
-            >Output verbose</label
+        <label for="node-input-verboseOut" style="width: auto;"
+            >Verbose output</label
         >
     </div>
     <div class="form-row">
@@ -395,7 +408,7 @@ http axios request node
 : Response (axios-responseType) : JSON, text or array buffer.
 : Connection keep-alive (boolean) : Keep tcp connection alive between requests for better performance in certain scenarios.
 : Timeout (integer) : Timeout for request in milliseconds.
-: Output verbose (boolean) : Include http response headers and status code in output msg.
+: Verbose output (boolean) : Include http response headers and status code in output msg.
 
 ### Message Properties
 
