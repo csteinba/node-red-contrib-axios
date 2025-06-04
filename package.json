@@ -18,7 +18,7 @@
     "type": "git",
     "url": "https://github.com/cteinba/node-red-contrib-axios"
   },
-  "author": "steineey (https://github.com/csteinba)",
+  "author": "csteinba (https://github.com/csteinba)",
   "license": "MIT",
   "dependencies": {
     "axios": "^1.9.0"
