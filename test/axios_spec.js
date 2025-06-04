@@ -227,6 +227,7 @@ describe("axios node tests", function () {
                     wires: [["helper-node"]],
                     endpoint: "axios-endpoint-node",
                     method: "get",
+                    verboseOut: true,
                     url: `/basic-auth/${credentials.username}/${credentials.password}`,
                 },
                 { id: "helper-node", type: "helper" },
@@ -275,6 +276,7 @@ describe("axios node tests", function () {
                     endpoint: "axios-endpoint-node",
                     method: "get",
                     url: "/bearer",
+                    verboseOut: true,
                     validateStatus: false,
                 },
                 { id: "helper-node", type: "helper" },
@@ -297,6 +299,113 @@ describe("axios node tests", function () {
                             .property("payload")
                             .with.property("token", bearerToken);
                         done();
+                    } catch (err) {
+                        done(err);
+                    }
+                });
+                requestNode.receive({
+                    payload: {},
+                });
+            }
+        );
+    });
+
+    it("add API key to headers", function (done) {
+        const apiKey = {
+            key: "Foo",
+            value: "bar"
+        };
+        helper.load(
+            axiosNode,
+            [
+                {
+                    id: "axios-endpoint-node",
+                    type: "axios-endpoint",
+                    baseURL: AXIOS_BASE_URL,
+                    apiKeyKey: apiKey.key,
+                    apiKeyAddTo: "headers"
+                },
+                {
+                    id: "axios-request-node",
+                    type: "axios-request",
+                    wires: [["helper-node"]],
+                    endpoint: "axios-endpoint-node",
+                    method: "get",
+                    url: "/headers",
+                    verboseOut: true,
+                    validateStatus: false,
+                },
+                { id: "helper-node", type: "helper" },
+            ],
+            {
+                "axios-endpoint-node": {
+                    apiKeyValue: apiKey.value,
+                },
+            },
+            function () {
+                const helperNode = helper.getNode("helper-node");
+                const requestNode = helper.getNode("axios-request-node");
+                helperNode.on("input", (msg) => {
+                    try {
+                        msg.should.have.property("statusCode", 200);
+                        msg.should.have.property("payload")
+                            .with.property("headers")
+                            .with.property(apiKey.key, apiKey.value);
+                        done();
+                    } catch (err) {
+                        done(err);
+                    }
+                });
+                requestNode.receive({
+                    payload: {},
+                });
+            }
+        );
+    });
+
+
+    it("add API key to params", function (done) {
+        const apiKey = {
+            key: "Foo",
+            value: "bar"
+        };
+        helper.load(
+            axiosNode,
+            [
+                {
+                    id: "axios-endpoint-node",
+                    type: "axios-endpoint",
+                    baseURL: AXIOS_BASE_URL,
+                    apiKeyKey: apiKey.key,
+                    apiKeyAddTo: "params"
+                },
+                {
+                    id: "axios-request-node",
+                    type: "axios-request",
+                    wires: [["helper-node"]],
+                    endpoint: "axios-endpoint-node",
+                    method: "get",
+                    url: "/get",
+                    verboseOut: true,
+                    validateStatus: false,
+                },
+                { id: "helper-node", type: "helper" },
+            ],
+            {
+                "axios-endpoint-node": {
+                    apiKeyValue: apiKey.value,
+                },
+            },
+            function () {
+                const helperNode = helper.getNode("helper-node");
+                const requestNode = helper.getNode("axios-request-node");
+                helperNode.on("input", (msg) => {
+                    try {
+                        msg.should.have.property("statusCode", 200);
+                        msg.should.have.property("payload")
+                            .with.property("args")
+                            .with.property(apiKey.key, apiKey.value);
+                            done();
                     } catch (err) {
                         done(err);
                     }
