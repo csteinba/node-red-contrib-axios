@@ -1,7 +1,7 @@
 {
   "name": "node-red-contrib-axios",
   "version": "1.6.0",
-  "description": "A http request node for Node-RED",
+  "description": "An advanced HTTP request node for Node-RED.",
   "scripts": {
     "test": "mocha test/axios_spec.js --timeout=5000",
     "test-env-localhost": "AXIOS_BASE_URL=http://localhost:80 mocha test/axios_spec.js --timeout=3000"

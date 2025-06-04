@@ -1,38 +1,43 @@
 # node-red-contrib-axios
 
-An advanced http request node for Node-RED.
-Based on the [Axios](https://www.npmjs.com/package/axios) http client.
+An advanced HTTP request node for Node-RED, built on top of the [Axios](https://www.npmjs.com/package/axios) HTTP client.
 
-[![npm version](https://img.shields.io/npm/v/node-red-contrib-axios.svg?style=flat-square)](https://www.npmjs.org/package/node-red-contrib-axios)
-[![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=node-red-contrib-axios&query=$.install.pretty&label=install%20size&style=flat-square)](https://packagephobia.now.sh/result?p=node-red-contrib-axios)
-[![npm downloads](https://img.shields.io/npm/dm/node-red-contrib-axios.svg?style=flat-square)](https://npm-stat.com/charts.html?package=node-red-contrib-axios)
+[![npm version](https://img.shields.io/npm/v/node-red-contrib-axios.svg?style=flat-square)](https://www.npmjs.org/package/node-red-contrib-axios)  
+[![install size](https://img.shields.io/badge/dynamic/json?url=https://packagephobia.com/v2/api.json?p=node-red-contrib-axios&query=$.install.pretty&label=install%20size&style=flat-square)](https://packagephobia.now.sh/result?p=node-red-contrib-axios)  
+[![npm downloads](https://img.shields.io/npm/dm/node-red-contrib-axios.svg?style=flat-square)](https://npm-stat.com/charts.html?package=node-red-contrib-axios)  
 [![Known Vulnerabilities](https://snyk.io/test/npm/node-red-contrib-axios/badge.svg)](https://snyk.io/test/npm/node-red-contrib-axios)
 
-## Nodes of this package
+## Nodes included in this package
 
-This package provides two nodes.
+This package includes two nodes:
 
-### Http endpoint configuration node
+### HTTP Endpoint Configuration Node
 
-Define your http endpoints base configuration (base URL, authentication, certificates, proxy) in a configuration node.
-This is a huge benefit, because you can reuse this configuration in multiple request nodes.
+Use this node to define base configurations for your HTTP endpoints—such as base URL, authentication, certificates, or proxy settings.  
+This approach is especially powerful, as the configuration can be reused across multiple HTTP request nodes.
 
-![axios-endpoint](https://raw.githubusercontent.com/steineey/node-red-contrib-axios/master/examples/axios-endpoint.png)
+Supported authentication mechanisms:
 
-### Http request node
+- Basic Authentication  
+- Bearer Token Authentication  
+- API Key (via HTTP header or query parameter)
 
-Use this node inside your flows to make http requests.
+![axios-endpoint](https://raw.githubusercontent.com/csteinba/node-red-contrib-axios/master/examples/axios-endpoint.png)
+
+### HTTP Request Node
+
+Use this node within your flows to perform HTTP requests.
 
 ![axios-request](https://raw.githubusercontent.com/steineey/node-red-contrib-axios/master/examples/axios-request.png)
 
-## Example flows
+## Example Flows
 
-Try out this cool [basics flow](https://github.com/steineey/node-red-contrib-axios/blob/master/examples/basics.json).
+Check out this [basic example flow](https://github.com/csteinba/node-red-contrib-axios/blob/master/examples/basics.json) to get started.
 
-Or learn how to use multipart/form-data with this [flow](https://github.com/steineey/node-red-contrib-axios/blob/master/examples/form-data.json).
+Or learn how to use `multipart/form-data` with this [example flow](https://github.com/csteinba/node-red-contrib-axios/blob/master/examples/form-data.json).
 
-![axios-flow](https://raw.githubusercontent.com/steineey/node-red-contrib-axios/master/examples/axios-flow.png)
+![axios-flow](https://raw.githubusercontent.com/csteinba/node-red-contrib-axios/master/examples/axios-flow.png)
 
-## More documentation
+## Documentation
 
-All node functions are well documented inside Node-RED.
+All node functionalities are thoroughly documented within the Node-RED editor.
