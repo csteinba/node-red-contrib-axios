@@ -66,6 +66,7 @@ module.exports = function (RED) {
         // request authentication bearer token
         if (endpoint.credentials.bearerToken) {
             baseConfig.headers = {
+                ...baseConfig.headers,
                 Authorization: `Bearer ${endpoint.credentials.bearerToken}`,
             };
         }
@@ -140,7 +141,6 @@ module.exports = function (RED) {
         }
 
         node.on("input", async function (msg, send, done) {
-
             const execStartTs = execStart();
 
             function getTypedInput(type, v) {
@@ -173,7 +173,6 @@ module.exports = function (RED) {
             };
 
             try {
-                
                 if (config.method === "get") {
                     // in case of get-method use payload for params
                     config.params = msg.params || msg.payload;
@@ -202,13 +201,12 @@ module.exports = function (RED) {
             axios
                 .request(config)
                 .then((response) => {
-                    send({
-                        ...msg,
-                        headers: response.headers,
-                        payload: response.data,
-                        statusCode: response.status,
-                    });
-
+                    msg.payload = response.data;
+                    if (n.outputVerbose ?? true) { // Keep the flow msg clean
+                        msg.statusCode = response.status;
+                        msg.headers = response.headers;
+                    }
+                    send(msg);
                     execSuccess(execStartTs);
                     done();
                 })

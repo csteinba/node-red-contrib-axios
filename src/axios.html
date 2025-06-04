@@ -24,7 +24,7 @@
             return this.name || this.baseURL;
         },
         oneditprepare: function () {
-            
+
             this.tabs = RED.tabs.create({
                 id: "tabs",
                 onchange: function (tab) {
@@ -162,6 +162,7 @@
     </div>
 </script>
 
+<!-- prettier-ignore -->
 <script type="text/markdown" data-help-name="axios-endpoint">
 http endpoint configuration for axios request
 
@@ -193,6 +194,7 @@ Proxy hostname, port and optional authentication for proxy.
             keepAlive: { value: false },
             timeout: { value: 30000, required: true },
             validateStatus: { value: true },
+            outputVerbose: { value: false },
             headers: { value: [] },
             params: { value: [] }
         },
@@ -215,11 +217,11 @@ Proxy hostname, port and optional authentication for proxy.
                         }).appendTo(container);
 
                         const propertyKeyCell = $('<div/>').css({ 'flex-grow': 1 }).appendTo(row);
-                        const propertyKeyValue = $('<input/>', { 
-                            class: `node-input-${property}-name`, 
-                            type: "text", 
-                            style: "width: 100%", 
-                            placeholder: "key" 
+                        const propertyKeyValue = $('<input/>', {
+                            class: `node-input-${property}-name`,
+                            type: "text",
+                            style: "width: 100%",
+                            placeholder: "key"
                             })
                             .appendTo(propertyKeyCell)
                             .typedInput({ types: ["str", "msg", "flow", "global"] });
@@ -227,11 +229,11 @@ Proxy hostname, port and optional authentication for proxy.
                         propertyKeyValue.typedInput('value', prop.keyValue);
 
                         const propertyValueCell = $('<div/>').css({ 'flex-grow': 1, 'margin-left': '10px' }).appendTo(row);
-                        const propertyValue = $('<input/>', { 
-                            class: `node-input-${property}-value`, 
-                            type: "text", 
-                            style: "width: 100%", 
-                            placeholder: "value" 
+                        const propertyValue = $('<input/>', {
+                            class: `node-input-${property}-value`,
+                            type: "text",
+                            style: "width: 100%",
+                            placeholder: "value"
                             })
                             .appendTo(propertyValueCell)
                             .typedInput({ types: ["str", "msg", "flow", "global"] });
@@ -277,9 +279,9 @@ Proxy hostname, port and optional authentication for proxy.
                             height -= cr.outerHeight(true);
                     }
                     $(`#node-input-${property}-container`).editableList('height',height);
-                } 
+                }
             });
-            
+
         },
         label: function () {
             return `[${this.method}] ${this.name || this.url || "request"}`;
@@ -289,15 +291,15 @@ Proxy hostname, port and optional authentication for proxy.
 
 <script type="text/html" data-template-name="axios-request">
     <div class="form-row">
-        <label for="node-input-endpoint"
-            ><i class="fa fa-server"></i> Endpoint</label
-        >
+        <label for="node-input-endpoint">
+            <i class="fa fa-server"></i> Endpoint
+        </label>
         <input type="text" id="node-input-endpoint" />
     </div>
     <div class="form-row">
-        <label for="node-input-method"
-            ><i class="fa fa-envelope-o"></i> Method</label
-        >
+        <label for="node-input-method">
+            <i class="fa fa-envelope-o"></i> Method
+        </label>
         <select id="node-input-method">
             <option value="get">GET</option>
             <option value="post">POST</option>
@@ -307,25 +309,31 @@ Proxy hostname, port and optional authentication for proxy.
         </select>
     </div>
     <div class="form-row">
-        <label for="node-input-url"><i class="fa fa-terminal"></i> URL</label>
+        <label for="node-input-url">
+            <i class="fa fa-terminal"></i> URL
+        </label>
         <input type="text" id="node-input-url" placeholder="/resource" />
     </div>
     <div class="form-row" style="margin-bottom:0;">
-        <label><i class="fa fa-list"></i> Params</label>
+        <label>
+            <i class="fa fa-list"></i> Params
+        </label>
     </div>
     <div class="form-row node-input-params-container-row">
         <ol id="node-input-params-container"></ol>
     </div>
     <div class="form-row" style="margin-bottom:0;">
-        <label><i class="fa fa-list"></i> Headers</label>
+        <label>
+            <i class="fa fa-list"></i> Headers
+        </label>
     </div>
     <div class="form-row node-input-headers-container-row">
         <ol id="node-input-headers-container"></ol>
     </div>
     <div class="form-row">
-        <label for="node-input-responseType"
-            ><i class="fa fa-sign-out"></i> Response</label
-        >
+        <label for="node-input-responseType">
+            <i class="fa fa-sign-out"></i> Response
+        </label>
         <select id="node-input-responseType">
             <option value="json">JSON</option>
             <option value="text">Text</option>
@@ -360,22 +368,34 @@ Proxy hostname, port and optional authentication for proxy.
         >
     </div>
     <div class="form-row">
+        <input
+            type="checkbox"
+            id="node-input-outputVerbose"
+            style="display: inline-block; width: auto; vertical-align: top;"
+        />
+        <label for="node-input-outputVerbose" style="width: auto;"
+            >Output verbose</label
+        >
+    </div>
+    <div class="form-row">
         <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
         <input type="text" id="node-input-name" />
     </div>
 </script>
 
+<!-- prettier-ignore -->
 <script type="text/markdown" data-help-name="axios-request">
 http axios request node
 
 ### Node Properties
 
 : Endpoint (axios-endpoint) : Define an endpoint configuration
-: Method (http-method) : Http method [GET, POST, PUT, DELETE]. 
-: URL (string) : `URL` will be added to `baseURL`. Overwrite with `msg.url`. 
+: Method (http-method) : Http method [GET, POST, PUT, DELETE].
+: URL (string) : `URL` will be added to `baseURL`. Overwrite with `msg.url`.
 : Response (axios-responseType) : JSON, text or array buffer.
 : Connection keep-alive (boolean) : Keep tcp connection alive between requests for better performance in certain scenarios.
 : Timeout (integer) : Timeout for request in milliseconds.
+: Output verbose (boolean) : Include http response headers and status code in output msg.
 
 ### Message Properties
 
@@ -383,18 +403,17 @@ http axios request node
 : msg.headers (object) : `headers` are custom headers to be sent.
 : msg.params (object) : `params` are the URL parameters to be sent with the request.
 
-### Node Status 
+### Node Status
 
 Different status information is displayed below the node:
 
 #### Tags
 - **s** : Number of successful executions
-- **err** : Number of failed executions 
-- **rt** : Last execution runtime in ms 
+- **err** : Number of failed executions
+- **rt** : Last execution runtime in ms
 
 #### Colors
-- **green** : Last execution was successful 
-- **blue** : Node execution in progress 
+- **green** : Last execution was successful
+- **blue** : Node execution in progress
 - **red** : Last execution failed
-
 </script>
